@@ -32,4 +32,13 @@ module Sample4210
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
+
+  class OkuribitoSetting < Rails::Railtie
+    config.after_initialize do
+      okuribito = Okuribito::OkuribitoPatch.new do |method_name, obj_name, caller_info|
+        # do something as you like!
+      end
+      okuribito.apply("config/okuribito.yml")
+    end
+  end
 end
