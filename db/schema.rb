@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126151748) do
+ActiveRecord::Schema.define(version: 20171126153143) do
 
   create_table "ideas", force: :cascade do |t|
     t.string   "name"
@@ -20,5 +20,30 @@ ActiveRecord::Schema.define(version: 20171126151748) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "okuribito_rails_method_call_logs", force: :cascade do |t|
+    t.integer  "method_call_situation_id", null: false
+    t.string   "class_name",               null: false
+    t.string   "method_symbol",            null: false
+    t.string   "method_name",              null: false
+    t.text     "back_trace"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "okuribito_rails_method_call_logs", ["class_name"], name: "index_okuribito_rails_method_call_logs_on_class_name"
+  add_index "okuribito_rails_method_call_logs", ["method_name"], name: "index_okuribito_rails_method_call_logs_on_method_name"
+
+  create_table "okuribito_rails_method_call_situations", force: :cascade do |t|
+    t.string   "class_name",                null: false
+    t.string   "method_symbol",             null: false
+    t.string   "method_name",               null: false
+    t.integer  "called_num",    default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "okuribito_rails_method_call_situations", ["class_name"], name: "index_okuribito_rails_method_call_situations_on_class_name"
+  add_index "okuribito_rails_method_call_situations", ["method_name"], name: "index_okuribito_rails_method_call_situations_on_method_name"
 
 end
